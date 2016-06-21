@@ -4,11 +4,18 @@ class MessageList {
     this.node = $(`#${id}`);
     this.subscribeToService(messageService);
     this.messages = [];
+    this.filter = function(message) {
+      return true;
+    };
   }
 
   subscribeToService(messageService) {
     messageService.observable.subscribe(message => {
-      this.displayMessage(message);
+      if (this.filter(message)) {
+        this.displayMessage(message);
+      }
+
+      this.messages.push(message);
     });
   }
 
@@ -17,10 +24,22 @@ class MessageList {
     var messageText = message.username + ': ' + message.text;
     this.node.append($(`<div class="message">${_.escape(messageText)}</div>`));
   }
-  displayMessages(filter) { // Display Messages
+
+  setFilter(key, value) { // Display Messages
     // do cross scripting through username
-    // this.messages.filter();
-    // var messageText = message.username + ': ' + message.text;
-    // this.node.append($(`<div class="message">${_.escape(messageText)}</div>`));
+    // First blast currently existing messages
+    debugger;
+    this.node.html('');
+    // Filter preexisting messages
+    this.filter = function(message) {
+      return message[key] = value;s
+    };
+
+    _(this.messages).filter(this.filter).forEach(this.displayMessage.bind(this));
   }
+
+  setRoom(room) {
+    this.setFilter('roomname', room);  
+  }
+
 }

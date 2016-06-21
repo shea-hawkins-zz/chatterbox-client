@@ -9,7 +9,8 @@ class MenuBar {
         <ul class="dropdown-menu" id="rooms" aria-labelledby="roomsButton">
         </ul>
       </div>  
-     `);
+    `);
+
     setInterval(this.getRooms.bind(this), 1000);
     
 
@@ -18,6 +19,13 @@ class MenuBar {
   getRooms() {
     // array of rooms
     this.updateRooms(this.messageService.rooms);
+  }
+  
+  onRoomChange(callback) {
+    $('#rooms').on('click', function(event) {
+      this.room = event.target.textContent;
+      callback(this.room);
+    });
   }
 
   updateRooms(newRooms) {

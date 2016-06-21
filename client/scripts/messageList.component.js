@@ -4,11 +4,17 @@ var MessageList = (function () {
         this.node = $("#" + id);
         this.subscribeToService(messageService);
         this.messages = [];
+        this.filter = function (message) {
+            return true;
+        };
     }
     MessageList.prototype.subscribeToService = function (messageService) {
         var _this = this;
         messageService.observable.subscribe(function (message) {
-            _this.displayMessage(message);
+            if (_this.filter(message)) {
+                _this.displayMessage(message);
+            }
+            _this.messages.push(message);
         });
     };
     MessageList.prototype.displayMessage = function (message) {
@@ -16,11 +22,20 @@ var MessageList = (function () {
         var messageText = message.username + ': ' + message.text;
         this.node.append($("<div class=\"message\">" + _.escape(messageText) + "</div>"));
     };
-    MessageList.prototype.displayMessages = function (filter) {
+    MessageList.prototype.setFilter = function (key, value) {
         // do cross scripting through username
-        // this.messages.filter();
-        // var messageText = message.username + ': ' + message.text;
-        // this.node.append($(`<div class="message">${_.escape(messageText)}</div>`));
+        // First blast currently existing messages
+        debugger;
+        this.node.html('');
+        // Filter preexisting messages
+        this.filter = function (message) {
+            return message[key] = value;
+            s;
+        };
+        _(this.messages).filter(this.filter).forEach(this.displayMessage.bind(this));
+    };
+    MessageList.prototype.setRoom = function (room) {
+        this.setFilter('roomname', room);
     };
     return MessageList;
 }());

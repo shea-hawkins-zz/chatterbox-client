@@ -1,12 +1,15 @@
 class App {
   constructor(id) {
-    let messageService = new MessageService('https://api.parse.com/1/classes/messages');
+    let messageService = new MessageService('https://api.parse.com/1/classes/messages');''
     $(`#${id}`).append($('<div id="menuBar"></div>'));
     $(`#${id}`).append($('<div id="messageList"></div>'));
     $(`#${id}`).append($('<div id="messageInput"></div>'));
+
     let messageList = new MessageList('messageList', messageService);
     let messageInput = new MessageInput('messageInput', messageService);
     let menuBar = new MenuBar('menuBar', messageService);
+
+    menuBar.onRoomChange(messageList.setRoom.bind(messageList)); //possible location for observable.
     // Create messageBar component
     // Messagebar dropdown that we are listening to the change inside the app. 
     // When changes, call messageList.displayMessages(filter);

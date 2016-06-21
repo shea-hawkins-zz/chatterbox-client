@@ -3,12 +3,18 @@ var MenuBar = (function () {
         this.node = $("#" + id);
         this.messageService = messageService;
         this.rooms = [];
-        this.node.html("\n      <div class=\"dropdown\">\n        <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" id=\"roomsButton\">Rooms</button>\n        <ul class=\"dropdown-menu\" id=\"rooms\" aria-labelledby=\"roomsButton\">\n        </ul>\n      </div>  \n     ");
+        this.node.html("\n      <div class=\"dropdown\">\n        <button class=\"btn btn-primary dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" id=\"roomsButton\">Rooms</button>\n        <ul class=\"dropdown-menu\" id=\"rooms\" aria-labelledby=\"roomsButton\">\n        </ul>\n      </div>  \n    ");
         setInterval(this.getRooms.bind(this), 1000);
     }
     MenuBar.prototype.getRooms = function () {
         // array of rooms
         this.updateRooms(this.messageService.rooms);
+    };
+    MenuBar.prototype.onRoomChange = function (callback) {
+        $('#rooms').on('click', function (event) {
+            this.room = event.target.textContent;
+            callback(this.room);
+        });
     };
     MenuBar.prototype.updateRooms = function (newRooms) {
         var _this = this;
