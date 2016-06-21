@@ -1,12 +1,17 @@
 class App {
   constructor(id) {
     let messageService = new MessageService('https://api.parse.com/1/classes/messages');
-
+    $(`#${id}`).append($('<div id="menuBar"></div>'));
     $(`#${id}`).append($('<div id="messageList"></div>'));
     $(`#${id}`).append($('<div id="messageInput"></div>'));
-    console.log(messageService);
-    let messageComponent = new MessageList('messageList', messageService);
-    let messageInput = new MessageInput('messageInput', messageService)
+    let messageList = new MessageList('messageList', messageService);
+    let messageInput = new MessageInput('messageInput', messageService);
+    let menuBar = new MenuBar('menuBar', messageService);
+    // Create messageBar component
+    // Messagebar dropdown that we are listening to the change inside the app. 
+    // When changes, call messageList.displayMessages(filter);
+    // MessageBar needs to bind to the messageService and retrieve the distinct list of rooms.
+    
   }
 }
 var getUsername = function() {

@@ -10,6 +10,7 @@ class MessageService {
       jsonp: true
     };
     this.messages = [];
+    this.rooms = [];
     this.observable = this._createObserver();
     this._setScheduler();
   }
@@ -29,6 +30,9 @@ class MessageService {
        this.messages.push(message);
        // Observer only exists when the object is currenstly being subscribed to.
        this.observer.next(message);
+      } 
+      if (this.rooms.indexOf(message.roomname) < 0) {
+        this.rooms.push(message.roomname);      
       }
     }
   }
