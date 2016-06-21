@@ -19,6 +19,7 @@ var MenuBar = (function () {
     MenuBar.prototype.updateRooms = function (newRooms) {
         var _this = this;
         newRooms.forEach(function (room) {
+            room = _.escape(room);
             if (_this.rooms.indexOf(room) < 0) {
                 $('#rooms').append($("<li>" + room + "</li>"));
                 _this.rooms.push(room);

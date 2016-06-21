@@ -60,8 +60,12 @@ form input[type=text] {
   margin:auto;
 }
 
-.dropdown-menu {
+.dropdown-menu:hover {
+  cursor: pointer;
+}
 
+.dropdown-menu li:hover {
+  background-color: limegreen;
 }
 
 .spinner {

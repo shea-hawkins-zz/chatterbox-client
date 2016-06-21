@@ -25,7 +25,6 @@ var MessageList = (function () {
     MessageList.prototype.setFilter = function (key, value) {
         // do cross scripting through username
         // First blast currently existing messages
-        debugger;
         this.node.html('');
         // Filter preexisting messages
         this.filter = function (message) {

@@ -28,7 +28,6 @@ class MessageList {
   setFilter(key, value) { // Display Messages
     // do cross scripting through username
     // First blast currently existing messages
-    debugger;
     this.node.html('');
     // Filter preexisting messages
     this.filter = function(message) {
@@ -43,3 +42,4 @@ class MessageList {
   }
 
 }
+

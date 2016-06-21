@@ -20,7 +20,7 @@ class MenuBar {
     // array of rooms
     this.updateRooms(this.messageService.rooms);
   }
-  
+
   onRoomChange(callback) {
     $('#rooms').on('click', function(event) {
       this.room = event.target.textContent;
@@ -30,6 +30,7 @@ class MenuBar {
 
   updateRooms(newRooms) {
     newRooms.forEach(room => {
+      room = _.escape(room);
       if (this.rooms.indexOf(room) < 0) {
         $('#rooms').append($(`<li>${room}</li>`);
         this.rooms.push(room);
