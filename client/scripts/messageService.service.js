@@ -55,15 +55,18 @@ var MessageService = (function () {
     };
     MessageService.prototype.postMessage = function (message) {
         $.ajax({
-            url: this.url,
+            // This is the url you should use to communicate with the parse API server.
+            url: 'https://api.parse.com/1/classes/messages',
             type: 'POST',
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Headers': 'x-requested-with'
-            },
+            data: JSON.stringify(message),
             contentType: 'application/json',
-            dataType: 'json',
-            data: JSON.stringify(message)
+            success: function (data) {
+                console.log('chatterbox: Message sent');
+            },
+            error: function (data) {
+                // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
+                console.error('chatterbox: Failed to send message', data);
+            }
         });
     };
     return MessageService;

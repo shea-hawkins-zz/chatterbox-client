@@ -5,7 +5,7 @@ var MessageInput = (function () {
         this.node.append($('<div></div>').html('<input type="text" class="inputForm"></input><button type="submit" class="submit btn btn-primary">Submit</button>'));
         $('.submit').on('click', function () {
             _this.message = $('.inputForm').val();
-            messageService.postMessage({ text: _this.message, username: getUsername(), room: 'general' });
+            messageService.postMessage({ text: _this.message, username: getUsername(), roomname: 'general' });
         });
     }
     return MessageInput;
