@@ -1,10 +1,25 @@
 class MessageInput {
   constructor(id, messageService)  {
     this.node = $(`#${id}`);
-    this.node.append($('<div></div>').html('<input type="text" class="inputForm"></input><button type="submit" class="submit btn btn-primary">Submit</button>');
+
+    this.node.append($('<div></div>').html(`
+      <div class="form-group">
+        <input type="text" class="inputForm form-control"></input>
+        <button type="submit" class="submit btn btn-default">Send Message</button>
+      </div>
+    `);
+      
     $('.submit').on('click', () => {
       this.message = $('.inputForm').val();
-      messageService.postMessage({ text: this.message, username: getUsername(), roomname: 'general'});
+      messageService.postMessage({ 
+        username: getUsername(), 
+        text: this.message, 
+        roomname: 'general'
+      });
+
+      // erase message once sent
+      $('.inputForm').val('');
+
     });
   }
 }

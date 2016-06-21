@@ -32,7 +32,7 @@ class MessageService {
       }
     }
   }
-
+  
   _setScheduler() {
     this.getMessages();
     this.scheduler = Rx.Scheduler.default.schedulePeriodic(
@@ -41,7 +41,7 @@ class MessageService {
       this.getMessages.bind(this)
     );
   }
-
+  
   _createObserver() {
     return Rx.Observable.create(observer => {
       this.observer = observer;
@@ -63,18 +63,15 @@ class MessageService {
 
   postMessage(message) {
     $.ajax({
-      // This is the url you should use to communicate with the parse API server.
-      url: 'https://api.parse.com/1/classes/messages',
+      url: this.url,
       type: 'POST',
-      data: JSON.stringify(message),
       contentType: 'application/json',
-      success: function (data) {
-        console.log('chatterbox: Message sent');
-      },
-      error: function (data) {
-        // See: https://developer.mozilla.org/en-US/docs/Web/API/console.error
-        console.error('chatterbox: Failed to send message', data);
+      dataType: 'json',
+      data: JSON.stringify(message), 
+      success: function() {
+        console.log('Message delivered');  
       }
     });
   }
 }
+

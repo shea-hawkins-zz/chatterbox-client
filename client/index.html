@@ -4,23 +4,26 @@
     <meta charset="utf-8">
     <title>chatterbox</title>
     <link rel="stylesheet" href="styles/styles.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
   </head>
   <body>
     <div id="main">
-      <h1>chatterbox</h1>
+      <h1>Shea and Tee's Message Box</h1>
       <!-- Your HTML goes here! -->
     </div>
-    <div id="chats"></div>
+    <div id="app"></div>
 
     <!-- dependencies -->
     <script src="bower_components/rxjs/dist/rx.all.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/underscore/underscore.js"></script>
 
     <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/messageService.service.js"></script>
+    <script src="scripts/messageList.component.js"></script>
+     <script src="scripts/messageInput.component.js"></script>
     <script src="scripts/app.js"></script>
   </body>
 </html>
