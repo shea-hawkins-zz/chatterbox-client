@@ -2,6 +2,8 @@
 class MessageService {
 
   constructor(url) {
+    this.url = url;
+    this.getUrl = url + '?order=-createdAt';
     this.ajaxOptions = {
       url: url,
       contentType: 'application/jsonp',
@@ -25,7 +27,7 @@ class MessageService {
    for (var message of data) {
      if (!this._isDuplicate(message)) {
        this.messages.push(message);
-       // Observer only exists when the object is currently being subscribed to.
+       // Observer only exists when the object is currenstly being subscribed to.
        this.observer.next(message);
       }
     }
@@ -47,16 +49,30 @@ class MessageService {
   }
 
   getMessages() {
-    this.ajaxOptions.type = 'GET';
-    this.ajaxOptions.success = (data) => {
-      this._parseMessages(data.results);
-    };
-    $.ajax(this.ajaxOptions);
+    $.ajax({
+      url: this.getUrl,
+      type: 'GET',
+      contentType: 'application/jsonp',
+      jsonp: true,
+      success: (data) => {
+        this._parseMessages(data.results);
+      }
+    });
     return this.messages;
   }
-  postMessages() {
-    this.ajaxOptions.type = 'POST';
-    $.ajax(this.ajaxOptions);
+
+  postMessage(message) {
+    $.ajax({
+      url: this.url,
+      type: 'POST',
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'x-requested-with'
+      },
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify(message)
+    });
   }
 }
 

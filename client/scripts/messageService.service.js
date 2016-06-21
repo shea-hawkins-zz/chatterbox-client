@@ -1,5 +1,7 @@
 var MessageService = (function () {
     function MessageService(url) {
+        this.url = url;
+        this.getUrl = url + '?order=-createdAt';
         this.ajaxOptions = {
             url: url,
             contentType: 'application/jsonp',
@@ -23,7 +25,7 @@ var MessageService = (function () {
             var message = data_1[_i];
             if (!this._isDuplicate(message)) {
                 this.messages.push(message);
-                // Observer only exists when the object is currently being subscribed to.
+                // Observer only exists when the object is currenstly being subscribed to.
                 this.observer.next(message);
             }
         }
@@ -40,16 +42,29 @@ var MessageService = (function () {
     };
     MessageService.prototype.getMessages = function () {
         var _this = this;
-        this.ajaxOptions.type = 'GET';
-        this.ajaxOptions.success = function (data) {
-            _this._parseMessages(data.results);
-        };
-        $.ajax(this.ajaxOptions);
+        $.ajax({
+            url: this.getUrl,
+            type: 'GET',
+            contentType: 'application/jsonp',
+            jsonp: true,
+            success: function (data) {
+                _this._parseMessages(data.results);
+            }
+        });
         return this.messages;
     };
-    MessageService.prototype.postMessages = function () {
-        this.ajaxOptions.type = 'POST';
-        $.ajax(this.ajaxOptions);
+    MessageService.prototype.postMessage = function (message) {
+        $.ajax({
+            url: this.url,
+            type: 'POST',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'x-requested-with'
+            },
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(message)
+        });
     };
     return MessageService;
 }());
