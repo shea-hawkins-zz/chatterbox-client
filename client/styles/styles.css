@@ -90,6 +90,12 @@ form input[type=text] {
     padding: 10px;
 }
 
+.tabsBar {
+  margin: auto;
+  width: 40%; 
+
+}
+
 
 
 

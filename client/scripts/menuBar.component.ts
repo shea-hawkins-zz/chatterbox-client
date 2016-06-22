@@ -3,14 +3,16 @@ class MenuBar {
     this.node = $(`#${id}`);
     this.messageService = messageService;
     this.rooms = [];
+    this.tabs = [];
     this.node.html(`
-      <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="roomsButton">Rooms</button>
-        
-        <ul class="dropdown-menu" id="rooms" aria-labelledby="roomsButton">
-          <li><div class="form-group"><input type="text" class="form-control dropdownInput" id="newRoom"></input><button id="newRoomButton" class="btn btn-primary">New Room</button></div></li>
-        </ul>
-      </div>  
+      <ul class="nav nav-tabs tabsBar" role="tablist">
+          <li class="dropdown nav-item">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" id="roomsButton">Rooms</button>
+            <ul class="dropdown-menu" id="rooms" aria-labelledby="roomsButton">
+              <li><div class="form-group"><input type="text" class="form-control dropdownInput" id="newRoom"></input><button id="newRoomButton" class="btn btn-primary">New Room</button></div></li>
+            </ul>
+          </li>
+      </ul>
     `);
     
     this.getRooms();
@@ -44,9 +46,21 @@ class MenuBar {
   onRoomChange(callback) {
     $('#rooms').on('click', (event) => {
       if (event.target.id === 'newRoomButton') { return; }
-      this.room = event.target.textContent;
+      this.room = _.escape(event.target.textContent);
       $('#currentRoom').text(this.room);
       callback(this.room);
+      console.log('roomClicked');
+      if (this.tabs.indexOf(this.room) < 0) {
+
+        this.tabs.push(this.room);
+
+        $('.tabsBar').append($(`<li class="nav-item"><a class="nav-link active" data-toggle="tab" role="tab">${this.room}</a></li>`)
+          .on('click', (event) => {
+            event.target.textContent;
+            $(`#${event.target.textContent}`).trigger('click');
+          }));
+      }
+
     });
   }
 
@@ -58,10 +72,13 @@ class MenuBar {
     newRooms.forEach(room => {
       room = _.escape(room);
       if (this.rooms.indexOf(room) < 0) {
-        $('#rooms').append($(`<li>${room}</li>`));
+        $('#rooms').append($(`<li id="${room}">${room}</li>`));
         this.rooms.push(room);
       }
     });
   }
+
+  
+
 
 }
