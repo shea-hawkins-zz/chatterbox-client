@@ -8,7 +8,14 @@ var App = (function () {
         var messageList = new MessageList('messageList', messageService);
         var messageInput = new MessageInput('messageInput', messageService);
         var menuBar = new MenuBar('menuBar', messageService);
-        menuBar.onRoomChange(messageList.setRoom.bind(messageList)); //possible location for observable.
+        menuBar.onRoomChange(function (room) {
+            messageList.setRoom.call(messageList, room);
+            messageInput.setRoom.call(messageInput, room);
+        }); //possible location for observable.
+        menuBar.onRoomAdd(function (room) {
+            messageList.setRoom.call(messageList, room);
+            messageInput.setRoom.call(messageInput, room);
+        });
         // Create messageBar component
         // Messagebar dropdown that we are listening to the change inside the app. 
         // When changes, call messageList.displayMessages(filter);
